@@ -38,4 +38,9 @@ class PrivateSendMessage implements ShouldBroadcast
     {
         return new PrivateChannel('privatechat.'. $this->message->receiver_id);
     }
+
+    public function broadcastAs()
+    {
+        return 'privatechat';
+    }
 }

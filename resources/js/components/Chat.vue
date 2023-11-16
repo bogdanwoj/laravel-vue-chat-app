@@ -1,7 +1,7 @@
 <template>
     <div class="chat card">
         <div class="scrollable card-body" ref="hasScrolledToBottom">
-            <template v-for="message in messages">
+            <div v-for="message in messages">
                 <div class="message message-receive" v-if="user.id != message.user.id">
                     <p>
                         <strong class="primary-font">
@@ -20,14 +20,14 @@
                     <div><small>{{ formatTime(message.created_at) }} | {{ formatDate(message.created_at) }}</small></div>
                     </p>
                 </div>
-            </template>
+            </div>
         </div>
 
         <div class="chat-form input-group">
             <input id="btn-input" type="text" name="message" class="form-control input-sm message-" placeholder="Type your message here..." v-model="newMessage" @keyup.enter="addMessage">
 
             <span class="input-group-btn">
-	            <button class="btn btn-primary" id="btn-chat" @click="addMessage">
+	            <button class="btn btn-secondary" id="btn-chat" @click="addMessage">
 	                Send
 	            </button>
 	        </span>

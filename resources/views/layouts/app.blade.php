@@ -37,7 +37,7 @@
             margin-top: 5px;
         }
         .message-receive p{
-            background: #435f7a;
+            background: #60646c;
             color: #f5f5f5;
         }
         .message-receive{
@@ -54,7 +54,15 @@
             border-radius: 0px;
             background: #f2f2f2;
         }
+        .navbar-brand {
+            border: gray solid 2px;
+            border-radius: 10px;
+            padding: 10px;
+        }
 
+        .py-4{
+            background-color: gainsboro;
+        }
     </style>
 
 
@@ -93,7 +101,7 @@
 
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                Welcome {{ Auth::user()->name }}
+                                Welcome <b>{{ Auth::user()->name }}</b>
                             </a>
 
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">

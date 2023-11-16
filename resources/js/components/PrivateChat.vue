@@ -3,8 +3,20 @@
         <div class="row">
             <div class="col-4 online-users">
                 <h3>Now you can private chat with users!</h3>
+                <input
+                    type="text"
+                    class="form-control mb-2"
+                    placeholder="Search users"
+                    v-model="searchQuery"
+                />
                 <ul>
-                    <li v-for="friend in friends" v-if="user.id" :key="friend.id" @click="setFriendId(friend.id)" :class="{ 'selected-friend': friend.id === selectedFriendId }">
+                    <li
+                        v-for="friend in filteredFriends"
+                        v-if="user.id"
+                        :key="friend.id"
+                        @click="setFriendId(friend.id)"
+                        :class="{ 'selected-friend': friend.id === selectedFriendId }"
+                    >
                         {{ friend.name }}
                     </li>
                 </ul>
@@ -23,28 +35,32 @@
                         <div v-for="message in messages" :key="message.id">
                             <div v-if="message.user">
                                 <div class="message message-receive" v-if="user.id !== message.user.id">
+                                    <p>
                                     <strong class="primary-font">
                                         {{ message.user.name }} :
                                     </strong>
                                     {{ message.message }}
                                     <div><small>{{ formatTime(message.created_at) }} | {{ formatDate(message.created_at) }}</small></div>
+                                    </p>
                                 </div>
+
                                 <div class="message message-send" v-else>
+                                    <p>
                                     <strong class="primary-font">
                                         {{ message.user.name }} :
                                     </strong>
                                     {{ message.message }}
                                     <div><small>{{ formatTime(message.created_at) }} | {{ formatDate(message.created_at) }}</small></div>
+                                    </p>
                                 </div>
                             </div>
                         </div>
                     </div>
-
                     <div class="chat-form input-group">
                         <input id="btn-input" type="text" name="message" class="form-control input-sm message-" placeholder="Type your message here..." v-model="newPrivateMessage" @keyup.enter="addMessage">
 
                         <span class="input-group-btn">
-              <button class="btn btn-primary" id="btn-chat" @click="addMessage">
+              <button class="btn btn-secondary" id="btn-chat" @click="addMessage">
                 Send
               </button>
             </span>
@@ -58,10 +74,51 @@
 .selected-friend {
     color: green;
     font-weight: bold;
+    font-size: 24px;
 }
+.message p{
+    border-radius: 10px;
+    padding: 10px 20px 10px 8px;
+    display: inline-block;
+    width: auto;
+}
+.message-send p{
+    background: #e0e3e6;
+    color: #2f2d2d;
+}
+.message-send{
+    text-align: right;
+    margin-top: 5px;
+}
+.message-receive p{
+    background: #60646c;
+    color: #f5f5f5;
+}
+.message-receive{
+    margin-top: 5px;
+}
+
+.scrollable {
+    overflow: hidden;
+    overflow-y: scroll;
+    height: calc(100vh - 25vh);
+}
+.message-input{
+    border: none;
+    border-radius: 0px;
+    background: #f2f2f2;
+}
+.navbar-brand {
+    border: gray solid 2px;
+    border-radius: 10px;
+    padding: 10px;
+}
+
 </style>
+
+
 <script>
-import { ref, onMounted, onUpdated } from 'vue';
+import { ref, onMounted, onUpdated, computed } from 'vue';
 import axios from 'axios';
 
 const formatTime = (timestamp) => {
@@ -82,8 +139,7 @@ export default {
         let users = ref([]);
         let friendId = ref('');
         let selectedFriendId = ref(null);
-
-        // Add the friends property
+        let searchQuery = ref('');
         let friends = ref([]);
 
         onMounted(() => {
@@ -164,7 +220,11 @@ export default {
             return friend ? friend.name : '';
         };
 
-
+        const filteredFriends = computed(() => {
+            return friends.value.filter((friend) =>
+                friend.name.toLowerCase().includes(searchQuery.value.toLowerCase())
+            );
+        });
 
         return {
             messages,
@@ -181,6 +241,8 @@ export default {
             setFriendId,
             getFriendName,
             selectedFriendId,
+            searchQuery,
+            filteredFriends,
         };
     },
 };
