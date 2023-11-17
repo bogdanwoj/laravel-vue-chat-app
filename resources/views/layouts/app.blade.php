@@ -33,7 +33,6 @@
             color: #2f2d2d;
         }
         .message-send{
-            text-align: right;
             margin-top: 5px;
         }
         .message-receive p{
@@ -42,6 +41,11 @@
         }
         .message-receive{
             margin-top: 5px;
+            text-align: right;
+        }
+
+        .messageTimeFormat{
+            font-size: 10px;
         }
 
         .scrollable {

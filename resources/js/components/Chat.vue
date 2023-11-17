@@ -8,7 +8,7 @@
                             {{ message.user.name }} :
                         </strong>
                         {{ message.message }}
-                    <div><small>{{ formatTime(message.created_at) }} | {{ formatDate(message.created_at) }}</small></div>
+                    <div class="messageTimeFormat">{{ formatTime(message.created_at) }} | {{ formatDate(message.created_at) }}</div>
                     </p>
                 </div>
                 <div class="message message-send" v-else>
@@ -17,7 +17,7 @@
                             {{ message.user.name }} :
                         </strong>
                         {{ message.message }}
-                    <div><small>{{ formatTime(message.created_at) }} | {{ formatDate(message.created_at) }}</small></div>
+                    <div class="messageTimeFormat">{{ formatTime(message.created_at) }} | {{ formatDate(message.created_at) }}</div>
                     </p>
                 </div>
             </div>
@@ -82,6 +82,10 @@ export default{
         };
 
         const addMessage = async()=> {
+            if (newMessage.value.trim() === '') {
+                alert('Message cannot be empty');
+                return;
+            }
             let user_message = {
                 user: props.user,
                 message: newMessage.value,

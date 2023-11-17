@@ -40,7 +40,7 @@
                                         {{ message.user.name }} :
                                     </strong>
                                     {{ message.message }}
-                                    <div><small>{{ formatTime(message.created_at) }} | {{ formatDate(message.created_at) }}</small></div>
+                                    <div class="messageTimeFormat">{{ formatTime(message.created_at) }} | {{ formatDate(message.created_at) }}</div>
                                     </p>
                                 </div>
 
@@ -50,7 +50,7 @@
                                         {{ message.user.name }} :
                                     </strong>
                                     {{ message.message }}
-                                    <div><small>{{ formatTime(message.created_at) }} | {{ formatDate(message.created_at) }}</small></div>
+                                    <div class="messageTimeFormat">{{ formatTime(message.created_at) }} | {{ formatDate(message.created_at) }}</div>
                                     </p>
                                 </div>
                             </div>
@@ -87,7 +87,7 @@
     color: #2f2d2d;
 }
 .message-send{
-    text-align: right;
+    text-align: left;
     margin-top: 5px;
 }
 .message-receive p{
@@ -96,6 +96,10 @@
 }
 .message-receive{
     margin-top: 5px;
+    text-align: right;
+}
+.messageTimeFormat{
+    font-size: 10px;
 }
 
 .scrollable {
@@ -196,6 +200,10 @@ export default {
         };
 
         const addMessage = async()=> {
+            if (newPrivateMessage.value.trim() === '') {
+                alert('Private message cannot be empty');
+                return;
+            }
             let user_message = {
                 user: props.user,
                 message: newPrivateMessage.value,
